@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    name: chatroom  #数据库名
+    url: jdbc:mysql://localhost:3306/chatroom?serverTimezone=UTC #url
+    username: root  #用户名
+    password: root  #密码
+    driver-class-name: com.mysql.jdbc.Driver  #数据库链接驱动
+  thymeleaf:
+    mode: HTML # Template mode to be applied to templates. See also Thymeleaf's TemplateMode enum.
+    prefix: classpath:/templates/ # Prefix that gets prepended to view names when building a URL.
+    suffix: .html # Suffix that gets appended to view names when building a URL.
+    cache: false
+  activemq:
+      broker-url: tcp://localhost:61616
+      in-memory: true
+      pool:
+        enabled: false
+      password: admin
+      user: admin

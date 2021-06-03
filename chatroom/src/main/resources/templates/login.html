@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head> 
+ <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<title>学生信息管理系统</title>
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="https://v3.bootcss.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="https://v3.bootcss.com/examples/signin/signin.css" rel="stylesheet">
+    <script src="https://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+		function $(id) {return document.getElementById(id)	}
+		function check(){
+			var user = $("user").value
+			var pwd = $("pwd").value
+			
+			
+			if (user == "" || pwd == "") {
+				alert("输入的账号或密码不能为空").
+				return false
+			}
+			if (pwd.length< 3) {
+				alert("密码不能小于3位数！")
+				return false
+			}
+			
+			return true;
+			
+		}		
+	</script>
+</head>
+<body>
+     <h1 align="center">在线聊天</h1>
+	<div class="container">
+
+      <form class="form-signin" action="/producer/loginPage" method="post" role="form">
+        <h2 class="form-signin-heading">请登录 </h2>
+        <label  class="sr-only">账号</label>
+        <input type="text" id="user" name="tno" class="form-control" placeholder="请输入账号" required autofocus>
+        <label  class="sr-only">密码</label>
+        <input type="password" id="pwd" name="password"  class="form-control" placeholder="请输入密码" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="" value="登录" onclick="return check()">Sign in</button>
+      </form>
+
+    </div> 
+
+    <script src="https://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+</form>
+</body>
+</html>
