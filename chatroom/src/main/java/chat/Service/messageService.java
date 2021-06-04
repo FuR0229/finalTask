@@ -22,8 +22,8 @@ public class messageService {
 
 
     // 发送消息，destination是发送到的队列，message是待发送的消息
-    public void sendMessage( final String message){
-        Destination destination = new ActiveMQQueue("mytest.queue");
+    public void sendMessage( String room,final String message){
+        Destination destination = new ActiveMQQueue(room);
         jmsTemplate.convertAndSend(destination, message);
     }
 

@@ -23,10 +23,17 @@ public class messageController {
     @Autowired
     JSONObject object = new JSONObject();
 
+    String room=null;
+
     public messageController(messageService producer) {
         this.producer = producer;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/getResult",method = RequestMethod.POST)
+    public void getResult(@RequestParam String result){
+        this.room=result;
+    }
     @ResponseBody
     @RequestMapping(value = "/send",method = RequestMethod.POST)
     public String send(HttpServletRequest request,HttpServletResponse response , HttpSession session) throws JMSException, IOException {
@@ -34,12 +41,12 @@ public class messageController {
         Calendar calendar = Calendar.getInstance(); // gets current instance of the calendar
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         message=formatter.format(calendar.getTime())+" :"+message;
-        producer.sendMessage(message);
-        producer.receiveMessage("mytest.queue");
-        System.out.println(session.getAttribute("name") + "  "+message);
+        producer.sendMessage(room,message);
+        producer.receiveMessage(room);
+        System.out.println(session.getAttribute("name") + "  "+producer.receiveMessage(room));
         //object.put("msg",producer.receiveMessage("mytest.queue"));
         //response.getWriter().write(String.valueOf(object));
         //return "<script language=\"javascript\">window.location.href=\"/chat\"</script>";
-        return producer.receiveMessage("mytest.queue");
+        return producer.receiveMessage(room);
     }
 }
