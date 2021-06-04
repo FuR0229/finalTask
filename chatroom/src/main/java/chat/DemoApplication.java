@@ -2,6 +2,7 @@ package chat;
 
 import chat.mapper.UserMapper;
 import chat.entity.User;
+import cn.hutool.json.JSONObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +29,10 @@ public class DemoApplication {
 				return null;
 			}
 		};
+	}
+	@Bean
+	public JSONObject jsonObject(){
+		return new JSONObject();
 	}
 
 }

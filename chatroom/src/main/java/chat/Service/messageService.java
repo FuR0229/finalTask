@@ -9,14 +9,15 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.config.SimpleJmsListenerEndpoint;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.jms.core.JmsTemplate;
 
 import javax.jms.*;
 import java.util.List;
 
 @Service("producerService")
-public class producerService {
+public class messageService {
     @Autowired // 也可以注入JmsTemplate，JmsMessagingTemplate对JmsTemplate进行了封装
-    private JmsMessagingTemplate jmsTemplate;
+    private JmsTemplate jmsTemplate;
     @Autowired private UserMapper userMapper;
 
 
@@ -34,20 +35,13 @@ public class producerService {
         // TODO Auto-generated method stub
         return userMapper.selectByPrimaryKey(id);
     }
-   // @JmsListener(destination = "mytest.queue")
-    public void receiveMessage() throws InterruptedException {
-        SimpleJmsListenerEndpoint endpoint = new SimpleJmsListenerEndpoint();
-        endpoint.setId("mytest.queue");
-        endpoint.setDestination("mytest.queue");
-        endpoint.setMessageListener(message -> {
-            try {
-                String text = ((TextMessage)message).getText();
-                System.out.println(Thread.currentThread().getName()+"获取到的消息为："+text);
-                Thread.sleep(1000);
-            } catch (InterruptedException | JMSException e) {
-                System.out.println("消息读取失败"+e.getMessage());
-            }
-        });
+    public String receiveMessage(String destination) throws JMSException {
+        Object msg=  jmsTemplate.receiveAndConvert(destination);
+        if (msg instanceof String) {
+           // System.out.println("Received: " + msg);
+            return (String)msg;
+        }
+        return null;
     }
 
 }

@@ -9,16 +9,48 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
-<div id="iphone"  >
-        <form id="box" class="navbar-form navbar-right" action="/producer/send" method="post">
-            <textarea id="text" style="width:300px;height:100px" name="textArea" th:text="${msg}" ></textarea>
+<style>
+    #message{
+        width: 50%;
+        height: 500px;
+        border: 1px solid black;
+        background-color: darkgray;
+
+    }
+
+    #inputVal{
+        width: 50%;
+    }
+    input{
+        width: 92%;
+    }
+</style>
+<body  ms-controller="remodel">
+<div id="message">
+
+</div>
+<div id="iphone">
+        <form id="box" class="navbar-form navbar-right"  action="/message/send" method="post">
             <input id="inp" type="text" name="input">
-            <button id="btn" type="submit" onclick="return check()">发送</button>
+            <button id="btn" type="submit" ms-click="@request">发送</button>
         </form>
 </div>
-<script>
-
+<script type="text/javascript">
+var remodel = avalon.define({
+    //id必须和页面上定义的ms-controller名字相同，否则无法控制页面
+    $id: "ajaxTestController",
+    text: " ",
+    request: function () {
+        $.ajax({
+            type: "post",
+            url: "/message/send",    //向springboot请求数据的url
+            data: {},
+            success: function (data) {
+                 document.getElementById("message").innerHTML+=data.msg+"</br>";
+            }
+        });
+    }
+});
 </script>
 </body>
 </html>
