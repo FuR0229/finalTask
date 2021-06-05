@@ -17,7 +17,6 @@
         background-color: darkgray;
 
     }
-
     #inputVal{
         width: 50%;
     }
@@ -25,9 +24,9 @@
         width: 92%;
     }
 </style>
-<body  ms-controller="remodel" method="post">
-<select name="room" id="roomId">
-    <option value="room1" selected = "selected" >room1</option>
+<body  method="post">
+<select name="room" id="roomId" placeholder="请选择房间" method="post">
+    <option value="room1">room1</option>
     <option value="room2">room2</option>
     <option value="room3">room3</option>
     <option value="room4">room4</option>
@@ -35,42 +34,58 @@
 </select>
 <button id="conf" type="submit" onclick="confirm()" >确认</button>
 <div id="message">
+
 </div>
 <div id="iphone">
-        <form id="box" class="navbar-form navbar-right"  action="/message/send" method="post">
+        <form id="box" class="navbar-form navbar-right"  method="post">
             <input id="inp" type="text" name="input">
-            <button id="btn" type="submit" ms-click="@request">发送</button>
+            <button id="btn" type="submit" onclick="sendMessage()">发送</button>
         </form>
 </div>
+<div >
+    <form  class="navbar-form navbar-right"  action="/message/sendFile" method="post">
+        <input id="file" type="file" name="input">
+        <button id="btn2" type="submit" >发送</button>
+    </form>
+</div>
 <script type="text/javascript">
-var remodel = avalon.define({
-    //id必须和页面上定义的ms-controller名字相同，否则无法控制页面
-    $id: "ajaxTestController",
-    text: " ",
-    request: function () {
-        $.ajax({
-            type: "post",
-            url: "/message/send",    //向springboot请求数据的url
-            data: {},
-            success: function (data) {
-                 document.getElementById("message").innerHTML+=data.msg+"</br>";
-            }
-        });
-    }
-});
 
+function sendMessage(){
+  var message=document.getElementById( 'inp' ).value;
+  $.ajax({
+        url:"/message/send",
+        type: "post",
+        data:  {'message':message},
+        dataType: "JSON",
+        success:function(data){
+           if(data.msg=="ok")
+             getMessage();
+        }
+    });
+}
+function getMessage(){
+  $.ajax({
+        url:'/message/receive',
+        success:function(data){
+                   document.getElementById("message").innerHTML+=data+"</br>";
+        }
+    });
+}
+setTimeout("getMessage()",100);
 function confirm(){
    var  obj=document.getElementById( 'roomId' );
    var  index=obj.selectedIndex;  //序号，取当前选中选项的序号
    obj[index].selected=true;
    var result=obj[index].value;
-   $.ajax({
+    $.ajax({
             url: "/message/getResult", //提价的路径
             type: "post",       //提交方式
             data:  {'result':result},
             dataType: "JSON",       //规定请求成功后返回的数据
             success: function (data) {
                 //请求成功之后进入该方法，data为成功后返回的数据
+                if(data.msg=="ok")
+                alert("成功加入聊天室:"+result);
             },
             error: function (errorMsg) {
                 //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
