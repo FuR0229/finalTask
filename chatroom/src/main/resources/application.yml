@@ -17,3 +17,5 @@ spring:
         enabled: false
       password: admin
       user: admin
+server:
+  connection-timeout: 18000000

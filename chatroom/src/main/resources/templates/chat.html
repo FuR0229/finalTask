@@ -43,13 +43,28 @@
         </form>
 </div>
 <div >
-    <form  class="navbar-form navbar-right"  action="/message/sendFile" method="post">
+    <form  class="navbar-form navbar-right"   method="post">
         <input id="file" type="file" name="input">
-        <button id="btn2" type="submit" >发送</button>
+        <button id="btn2" type="submit" onclick="sendFile()">发送</button>
     </form>
 </div>
 <script type="text/javascript">
+$
+function sendFile(){
+  var formData = new FormData();
+formData.append("file",document.getElementById("file").files[0]);
+  $.ajax({
+        url:"/message/sendFile",
+        type: "post",
+        data:formData,
+        dataType: "JSON",
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        contentType: false, //
+        success:function(data){
 
+        }
+    });
+}
 function sendMessage(){
   var message=document.getElementById( 'inp' ).value;
   $.ajax({
@@ -63,15 +78,18 @@ function sendMessage(){
         }
     });
 }
+
 function getMessage(){
   $.ajax({
         url:'/message/receive',
         success:function(data){
-                   document.getElementById("message").innerHTML+=data+"</br>";
+              document.getElementById("message").innerHTML+=data+"</br>";
         }
     });
 }
-setTimeout("getMessage()",100);
+
+setTimeout("getMessage()",0);
+
 function confirm(){
    var  obj=document.getElementById( 'roomId' );
    var  index=obj.selectedIndex;  //序号，取当前选中选项的序号

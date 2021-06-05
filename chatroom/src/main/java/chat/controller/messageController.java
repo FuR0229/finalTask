@@ -10,11 +10,13 @@ import javax.jms.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import cn.hutool.json.JSONObject;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/message")
@@ -56,23 +58,24 @@ public class messageController {
 
     @ResponseBody
     @RequestMapping(value = "/sendFile",method = RequestMethod.POST)
-    public String sendFile(HttpServletRequest request,HttpServletResponse response , HttpSession session) throws JMSException, IOException {
-        String message = request.getParameter("input");
+    public void sendFile(@RequestParam("file") MultipartFile file, HttpServletRequest request , HttpSession session) throws JMSException, IOException {
+        String message=request.getParameter("file");
         Calendar calendar = Calendar.getInstance(); // gets current instance of the calendar
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         message=formatter.format(calendar.getTime())+" :"+message;
         producer.sendMessage(room,message);
+        producer.sendFile(room,file);
         producer.receiveMessage(room);
         System.out.println(session.getAttribute("name") + "  "+producer.receiveMessage(room));
         //object.put("msg",producer.receiveMessage("mytest.queue"));
         //response.getWriter().write(String.valueOf(object));
         //return "<script language=\"javascript\">window.location.href=\"/chat\"</script>";
-        return producer.receiveMessage(room);
+        //return producer.receiveMessage(room);
     }
 
     @ResponseBody
     @RequestMapping(value = "/receive",method = RequestMethod.GET)
-    public String receive(HttpSession session) throws JMSException{
+    public String receive(HttpSession session) throws JMSException, IOException {
         /*ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
         final Connection connection = connectionFactory.createConnection();
         connection.start();
