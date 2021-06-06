@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import cn.hutool.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,8 +28,11 @@ public class messageController {
     JSONObject object = new JSONObject();
 
     String room=null;
+    ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+    Connection connection = connectionFactory.createConnection();
+    Session session=connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
 
-    public messageController(messageService producer) {
+    public messageController(messageService producer) throws JMSException {
         this.producer = producer;
     }
 
@@ -47,8 +51,8 @@ public class messageController {
         //String message = request.getParameter("input");
         Calendar calendar = Calendar.getInstance(); // gets current instance of the calendar
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        message=formatter.format(calendar.getTime())+" :"+message;
-        producer.sendMessage(this.room,message);
+        String message1=session.getAttribute("name")+" :"+message;
+        producer.sendMessage(this.room,message1);
         System.out.println(session.getAttribute("name") + "  "+message);
         object.put("msg","ok");
         //response.getWriter().write(String.valueOf(object));
@@ -65,8 +69,8 @@ public class messageController {
         message=formatter.format(calendar.getTime())+" :"+message;
         producer.sendMessage(room,message);
         producer.sendFile(room,file);
-        producer.receiveMessage(room);
-        System.out.println(session.getAttribute("name") + "  "+producer.receiveMessage(room));
+        //producer.receiveMessage(room);
+        //System.out.println(session.getAttribute("name") + "  "+producer.receiveMessage(room));
         //object.put("msg",producer.receiveMessage("mytest.queue"));
         //response.getWriter().write(String.valueOf(object));
         //return "<script language=\"javascript\">window.location.href=\"/chat\"</script>";
@@ -75,7 +79,7 @@ public class messageController {
 
     @ResponseBody
     @RequestMapping(value = "/receive",method = RequestMethod.GET)
-    public String receive(HttpSession session) throws JMSException, IOException {
-        return session.getAttribute("name") + "  "+producer.receiveMessage(room);
+    public String receive( HttpSession session) throws JMSException, IOException {
+        return producer.receiveMessage(room);
     }
 }

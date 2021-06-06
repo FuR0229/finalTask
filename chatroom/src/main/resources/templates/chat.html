@@ -11,11 +11,40 @@
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="rolling/js/rolling.js"></script>
     <script type="text/javascript" src="/javascripts/Public.js"></script>
+    <script type="text/javascript" src="js/amq_jquery_adapter.js"></script>
+    <script type="text/javascript" src="js/amq.js"></script>
 </head>
 <script>
+function receive(){
+   var amq = org.activemq.Amq;
+    amq.init({
+        uri: 'amq',
+        logging: true,
+        timeout: 20
+    });
+ var myHandler =
+        {
+            rcvMessage: function(message)
+            {
+               var myDate = new Date();
+               var time=myDate.toLocaleString( );
+                console.log(message);
+                //chrome
+                //showInfo("received " + message.textContent);
+              $('.main .chat_info').html($('.main .chat_info').html() + '<li class="left"><img src="images/user/2.png" alt=""><i>'+time+'</i><div class="aaa">' +  message.textContent  +'</div></li>');
+
+            }
+        };
+
+    var destination = "channel://room1";
+    amq.addListener(1,destination,myHandler.rcvMessage);
+}
+
+
 function reback(){
 		window.location.href="index";
 }
+
 function sendFile(){
   var formData = new FormData();
 formData.append("file",document.getElementById("file").files[0]);
@@ -31,34 +60,43 @@ formData.append("file",document.getElementById("file").files[0]);
         }
     });
 }
+
 function sendMessage(){
   var message=document.getElementById( 'inp' ).value;
+  var myDate = new Date();
+  var time=myDate.toLocaleString( );
+  var name="我";
   $.ajax({
         url:"/message/send",
         type: "post",
         data:  {'message':message},
         dataType: "JSON",
         success:function(data){
-           if(data.msg=="ok")
-             getMessage();
+
         }
     });
+    $('.main .chat_info').html($('.main .chat_info').html() + '<li class="right"><img src="images/user/1.png" alt=""><b>' + name + '</b><i>'+time+'</i><div class="aaa">' + message  +'</div></li>');
+    $('.scrollbar-macosx.scroll-content.scroll-scrolly_visible').animate({
+				scrollTop: $('.scrollbar-macosx.scroll-content.scroll-scrolly_visible').prop('scrollHeight')
+			}, 500);
+    $('.text input').val(''); // 清空输入框
 }
-
+var list=new ArrayList();
 function getMessage(){
+  var myDate = new Date();
+  var time=myDate.toLocaleString( );
   $.ajax({
         url:'/message/receive',
         success:function(data){
-              document.getElementById("message").innerHTML+=data+"</br>";
+             // if(list!=data)
+              $('.main .chat_info').html($('.main .chat_info').html() + '<li class="left"><img src="images/user/2.png" alt=""><i>'+time+'</i><div class="aaa">' +  data  +'</div></li>');
         }
     });
 }
-
-setTimeout("getMessage()",0);
-
+setTimeout("getMessage()",100);
 </script>
-<body class="room">
-<div class="scrollbar-macosx">
+<body class="room" onload="getMessage()">
+<div class="scrollbar-macosx" >
     <div class="header">
         <div class="toptext">
             <a href="index" onclick="reback()">
@@ -75,7 +113,11 @@ setTimeout("getMessage()",0);
         <div class="clapboard hidden"></div>
     </div>
     <div class="main container">
+        <div class="col-md-12">
+            <ul class="chat_info">
 
+            </ul>
+        </div>
     </div>
     <div class="input">
         <div class="center">
@@ -173,7 +215,7 @@ setTimeout("getMessage()",0);
                     <input id="inp" type="text" class="form-control" placeholder="输入聊天信息...">
                 </div>
                 <div class="col-xs-2 col-sm-1">
-                    <button id="btn" type="submit" onclick="sendMessage()">发送</button>
+                    <button id="subxx" role="button" onclick="sendMessage()"><span class="glyphicon glyphicon-share-alt"></span></button>
                 </div>
             </div>
         </div>

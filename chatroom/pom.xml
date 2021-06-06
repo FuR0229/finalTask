@@ -80,6 +80,17 @@
 			<artifactId>hutool-all</artifactId>
 			<version>4.5.9</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<version>5.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-web</artifactId>
+			<version>5.8.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

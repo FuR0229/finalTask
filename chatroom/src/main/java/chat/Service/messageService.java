@@ -6,15 +6,13 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.annotation.JmsListener;
-import org.springframework.jms.config.SimpleJmsListenerEndpoint;
-import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.jms.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("producerService")
@@ -50,7 +48,7 @@ public class messageService {
             receiveFile(destination1);
             return "upload file success";
         }
-       /*ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        /*ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
         final Connection connection = connectionFactory.createConnection();
         connection.start();
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -71,7 +69,7 @@ public class messageService {
                 }
             }
         });
-        return null;*/
+        return list;*/
     }
     public void sendFile(String room, MultipartFile file) throws JMSException, IOException {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
@@ -107,7 +105,6 @@ public class messageService {
     }
     public static void receiveFile(Destination destination) throws JMSException, IOException {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-        ConnectionFactory factory=new ActiveMQConnectionFactory("tcp://127.0.0.1:61616");
         Connection connection = connectionFactory.createConnection();
         connection.start();
         Session session=connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
