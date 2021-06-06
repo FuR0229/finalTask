@@ -76,24 +76,6 @@ public class messageController {
     @ResponseBody
     @RequestMapping(value = "/receive",method = RequestMethod.GET)
     public String receive(HttpSession session) throws JMSException, IOException {
-        /*ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-        final Connection connection = connectionFactory.createConnection();
-        connection.start();
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        final Destination destination = session.createQueue(room);
-        MessageConsumer consumer = session.createConsumer(destination);
-        consumer.setMessageListener(new MessageListener() {
-            public void onMessage(Message message) {
-                try {
-                    if (message instanceof TextMessage) {
-                        TextMessage textMessage = (TextMessage) message;
-                        System.out.println(textMessage.getText());
-                    }
-                }catch (JMSException e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
         return session.getAttribute("name") + "  "+producer.receiveMessage(room);
     }
 }

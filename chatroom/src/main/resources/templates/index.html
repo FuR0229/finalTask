@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>聊天室</title>
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/rolling/css/rolling.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<script type="text/javascript" src="/javascripts/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/rolling/js/rolling.js"></script>
+	<script type="text/javascript" src="/javascripts/Public.js"></script>
+</head>
+<script>
+function myFunction(){
+		window.location.href="chat";
+}
+function room1(){
+   var result="room1";
+    $.ajax({
+            url: "/message/getResult", //提价的路径
+            type: "post",       //提交方式
+            data:  {'result':result},
+            dataType: "JSON",       //规定请求成功后返回的数据
+            success: function (data) {
+                //请求成功之后进入该方法，data为成功后返回的数据
+                if(data.msg=="ok")
+                   window.location.href="chat";
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+            }
+        });
+}
+function room2(){
+   var result="room2";
+    $.ajax({
+            url: "/message/getResult", //提价的路径
+            type: "post",       //提交方式
+            data:  {'result':result},
+            dataType: "JSON",       //规定请求成功后返回的数据
+            success: function (data) {
+                //请求成功之后进入该方法，data为成功后返回的数据
+                if(data.msg=="ok")
+                   window.location.href="chat";
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+            }
+        });
+}
+function room3(){
+   var result="room3";
+    $.ajax({
+            url: "/message/getResult", //提价的路径
+            type: "post",       //提交方式
+            data:  {'result':result},
+            dataType: "JSON",       //规定请求成功后返回的数据
+            success: function (data) {
+                //请求成功之后进入该方法，data为成功后返回的数据
+                if(data.msg=="ok")
+                   window.location.href="chat";
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+            }
+        });
+}
+function room4(){
+   var result="room4";
+    $.ajax({
+            url: "/message/getResult", //提价的路径
+            type: "post",       //提交方式
+            data:  {'result':result},
+            dataType: "JSON",       //规定请求成功后返回的数据
+            success: function (data) {
+                //请求成功之后进入该方法，data为成功后返回的数据
+                if(data.msg=="ok")
+                   window.location.href="chat";
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+            }
+        });
+}
+function room5(){
+   var result="room5";
+    $.ajax({
+            url: "/message/getResult", //提价的路径
+            type: "post",       //提交方式
+            data:  {'result':result},
+            dataType: "JSON",       //规定请求成功后返回的数据
+            success: function (data) {
+                //请求成功之后进入该方法，data为成功后返回的数据
+                if(data.msg=="ok")
+                   window.location.href="chat";
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+            }
+        });
+}
+function room6(){
+   var result="room6";
+    $.ajax({
+            url: "/message/getResult", //提价的路径
+            type: "post",       //提交方式
+            data:  {'result':result},
+            dataType: "JSON",       //规定请求成功后返回的数据
+            success: function (data) {
+                //请求成功之后进入该方法，data为成功后返回的数据
+                if(data.msg=="ok")
+                   window.location.href="chat";
+            },
+            error: function (errorMsg) {
+                //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+            }
+        });
+}
+</script>
+<body class="rooms">
+	<div class="scrollbar-macosx">
+		<div class="header">
+			<div class="toptext">
+				<a href="#">
+					<span class="glyphicon glyphicon-home"></span>
+					<b>聊天室</b>
+				</a>
+			</div>
+			<ul class="topnavlist">
+				<li class="theme">
+					<a><span class="glyphicon glyphicon-leaf"></span><b>主题</b></a>
+					<div class="popover fade bottom in">
+						<div class="arrow"></div>
+						<h3 class="popover-title">主题设置</h3>
+						<div class="popover-content">
+							<img theme_id="1" src="/images/theme/1_xs.jpg" alt="主题">
+							<img theme_id="2"  src="/images/theme/2_xs.jpg" alt="主题">
+							<img theme_id="3"  src="/images/theme/3_xs.jpg" alt="主题">
+							<img theme_id="4"  src="/images/theme/4_xs.jpg" alt="主题">
+							<img theme_id="5"  src="/images/theme/5_xs.jpg" alt="主题">
+							<img theme_id="6"  src="/images/theme/6_xs.jpg" alt="主题">
+							<img theme_id="7"  src="/images/theme/7_xs.jpg" alt="主题">
+							<img theme_id="8"  src="/images/theme/8_xs.jpg" alt="主题">
+							<img theme_id="9"  src="/images/theme/9_xs.jpg" alt="主题">
+							<img theme_id="10"  src="/images/theme/10_xs.jpg" alt="主题">
+							<img theme_id="11"  src="/images/theme/11_xs.jpg" alt="主题">
+							<img theme_id="12"  src="/images/theme/12_xs.jpg" alt="主题">
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="clapboard hidden"></div>
+		</div>
+		<div class="main container">
+			<div class="room_list">
+				<div class="col-xs-6 col-sm-6 col-md-4">
+					<a href="#" class="thumbnail" onclick="room1()">
+						<img src="/images/rooms/1.jpg" alt="聊天室1">
+						<span><span id="room" class='glyphicon glyphicon-user' content="room1"></span>聊天室1</span>
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-4">
+					<a href="#" class="thumbnail" onclick="room2()">
+						<img src="/images/rooms/2.jpg" alt="聊天室2">
+						<span><span class='glyphicon glyphicon-user'></span>聊天室2</span>
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-4">
+					<a href="#" class="thumbnail" onclick="room3()">
+						<img src="/images/rooms/3.jpg" alt="聊天室3">
+						<span><span class='glyphicon glyphicon-user'></span>聊天室3</span>
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-4">
+					<a href="#" class="thumbnail" onclick="room4()">
+						<img src="/images/rooms/4.jpg" alt="聊天室4">
+						<span><span class='glyphicon glyphicon-user'></span>聊天室4</span>
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-4">
+					<a href="#" class="thumbnail" onclick="room5()">
+						<img src="/images/rooms/5.jpg" alt="聊天室5">
+						<span><span class='glyphicon glyphicon-user'></span>聊天室5</span>
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-4">
+					<a href="#" class="thumbnail" onclick="room6()">
+						<img src="/images/rooms/6.jpg" alt="聊天室6">
+						<span><span class='glyphicon glyphicon-user'></span>聊天室6</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

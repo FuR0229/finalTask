@@ -38,6 +38,7 @@ public class messageService {
         // TODO Auto-generated method stub
         return userMapper.selectByPrimaryKey(id);
     }
+
     public String receiveMessage(String destination) throws JMSException, IOException {
         Object msg=  jmsTemplate.receiveAndConvert(destination);
         if (msg instanceof String) {
@@ -49,7 +50,28 @@ public class messageService {
             receiveFile(destination1);
             return "upload file success";
         }
-        //return null;
+       /*ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        final Connection connection = connectionFactory.createConnection();
+        connection.start();
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        final Destination destination1 = session.createQueue(destination);
+        MessageConsumer consumer = session.createConsumer(destination1);
+        consumer.setMessageListener(new MessageListener() {
+            public void onMessage(Message message) {
+                try {
+                    if (message instanceof TextMessage) {
+                        TextMessage textMessage = (TextMessage) message;
+                        System.out.println(textMessage.getText());
+                    }
+                    else{
+                        receiveFile(destination1);
+                    }
+                }catch (JMSException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return null;*/
     }
     public void sendFile(String room, MultipartFile file) throws JMSException, IOException {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import javax.jms.JMSException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class loginController {
         Integer password=Integer.parseInt(password1);
         System.out.println("你输入的账号为：" + tno);
         System.out.println("你输入的密码为：" + password);
-        return "<script language=\"javascript\">window.location.href=\"/chat\"</script>";
+        return "<script language=\"javascript\">window.location.href=\"/index\"</script>";
         /*if (producerService.checkUserPwd(username, password).isEmpty()){
             return "<script language=\"javascript\">alert(\"用户名和密码不正确!\");window.location.href=\"/producer/login\"</script>";
         }
@@ -44,8 +45,13 @@ public class loginController {
     }
 
 
-    @RequestMapping(value="/chat")
+    @RequestMapping(value="/index")
     public String show(){
+        return "index";
+    }
+
+    @RequestMapping("/chat")
+    public String chat(HttpServletRequest request, HttpSession session){
         return "chat";
     }
 
